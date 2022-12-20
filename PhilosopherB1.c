@@ -63,7 +63,7 @@ void * let_go_fork(void * b){
         printf("\n");
 
         sem_wait(&BOWL);
-        printf("Philosopher number %d has taken bowl and will start eating",PhilosopherNum);
+        printf("Philosopher number %d has taken one of the bowls and will start eating",PhilosopherNum);
         printf("\n");
 
         eating(PhilosopherNum);
@@ -73,7 +73,7 @@ void * let_go_fork(void * b){
         printf("\n");
 
         sem_post(&BOWL);
-        printf("Philosopher %d has returned the bowl to table",PhilosopherNum);
+        printf("Philosopher %d has returned his/her bowl to table",PhilosopherNum);
         printf("\n");
 
         sem_post(&fork_[(PhilosopherNum+1)%5]);
