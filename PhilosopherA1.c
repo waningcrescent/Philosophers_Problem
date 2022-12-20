@@ -72,7 +72,7 @@ int main(){
     int x = 0;
     int j = 0;
     while(j<5){
-        sem_init(&fork_[i],0,1);
+        sem_init(&fork_[j],0,1);
         j++;
     }
 
