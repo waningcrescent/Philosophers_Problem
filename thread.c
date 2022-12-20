@@ -96,3 +96,5 @@ void *countC()
     }
     return 0;
 }
+
+printf("git pull working")
