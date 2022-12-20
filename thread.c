@@ -1,79 +1,86 @@
 #include<stdio.h>
-#include<stdlib.h>
 #include<unistd.h>
-#include<pthread.h>
 #include<semaphore.h>
+#include<pthread.h>
+#include<stdlib.h>
 
-sem_t forks[5];
 
-void eat(int n){
-    printf("Thread %d is eating now\n",n);
-}
+sem_t fork[5];
 
-void take_left(int n){
 
-    printf("Thread %d is trying to pick left fork\n",n);
-    sem_wait(&forks[n]);
-    printf("Thread %d picks the left fork\n",n);
-}
+void attempt_right_fork(int num){
 
-void take_right(int n){
-
-    printf("Thread %d is trying to pick right fork\n",n);
-    sem_wait(&forks[(n+1)%5]);
-    printf("Thread %d picks the right fork\n",n);
+    printf("Philosopher number %d tries to pick right fork up\n",num);
+    sem_wait(&fork[(num+1)%5]);
+    printf("Philosopher number %d picks the right fork up\n",num);
 
 }
 
+void attempt_left_fork(int num){
 
-void * collect_fork(void * n){
+    printf("Philosopher number %d tries to pick left fork up\n",num);
+    sem_wait(&fork[num]);
+    printf("Philosopher number %d picks the left fork up\n",num);
+}
 
-    while (1)
+
+void eating(int num){
+    printf("Philosopher number %d is eating right now\n",num);
+}
+
+void * let_go_fork(void * b){
+
+    while (true)
     {
-        int thread=*(int *)n;
+        int PhilosopherNum=*(int *)b;
 
-        if(thread==4){
+        if(PhilosopherNum==4){
 
-            take_right(thread);
-            take_left(thread);
+            attempt_right_fork(4);
+            attempt_left_fork(4);
 
         }else{
 
-            take_left(thread);
-            take_right(thread);
+            attempt_left_fork(PhilosopherNum);
+            attempt_right_fork(PhilosopherNum);
         }
 
-        eat(thread);
+        eating(PhilosopherNum);
         sleep(2);
-        printf("Thread %d has finished eating\n",thread);
+        printf("Philosopher number %d is done eating\n",PhilosopherNum);
         
-        sem_post(&forks[(thread+1)%5]);
-        printf("Thread %d left right fork\n",thread);
-        sem_post(&forks[(thread)]);
-        printf("Thread %d leaves left fork\n",thread);
+        sem_post(&forks[(PhilosopherNum+1)%5]);
+        printf("Philosopher number %d returns right fork to table\n",PhilosopherNum);
+        sem_post(&forks[(PhilosopherNum)]);
+        printf("Philosopher number %d returns left fork to table\n",PhilosopherNum);
 
     }
     
     
 }
 
+
+
+
 int main(){
+    
+    int threadnum[5];
+    pthread_t thr[5];
 
-    pthread_t thread[5];
-    int thread_no[5];
 
-    for(int i = 0 ; i<5 ; i++)
-        sem_init(&forks[i],0,1);
+    for(int i = 0 ; i<5 ; i++){
+        sem_init(&fork[i],0,1);
+    }
 
     for(int i = 0 ; i<5 ; i++){
 
         thread_no[i]=i;
-        pthread_create(&thread[i],NULL,collect_fork,(void *)&thread_no[i]);
+        pthread_create(&thr[i],NULL,let_go_fork,(void *)&threadnum[i]);
 
     }
 
     for(int i=0;i<5;i++)
-        pthread_join(thread[i],NULL);
+        pthread_join(thr[i],NULL);
 
     return 0;
 }
