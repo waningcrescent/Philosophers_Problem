@@ -10,36 +10,6 @@ sem_t BOWL;
 sem_t fork_[5];
 
 
-int main(){
-  
-    int threadnum[5];
-    pthread_t thr[5];
-    
-    int j = 0;
-    while(j<5){
-        sem_init(&fork_[j],0,1);
-        j++;
-    }
-    
-    sem_init(&BOWL,0,2);
-    
-    int y = 0;
-    while(y<=4){
-        threadnum[y]=y;
-        pthread_create(&thr[y],NULL,let_go_fork,(void *)&threadnum[y]);
-        y++;
-    }
-    
-   int x = 0;
-   while(x<5){
-        pthread_join(thr[x],NULL);
-        x++;
-    }
-
-    return 0;
-}
-
-
 void attempt_right_fork(int num){
 
     printf("Philosopher number %d tries to pick right fork up",num);
@@ -122,3 +92,34 @@ void * let_go_fork(void * b){
     }
      
 }
+
+int main(){
+  
+    int threadnum[5];
+    pthread_t thr[5];
+    
+    int j = 0;
+    while(j<5){
+        sem_init(&fork_[j],0,1);
+        j++;
+    }
+    
+    sem_init(&BOWL,0,2);
+    
+    int y = 0;
+    while(y<=4){
+        threadnum[y]=y;
+        pthread_create(&thr[y],NULL,let_go_fork,(void *)&threadnum[y]);
+        y++;
+    }
+    
+   int x = 0;
+   while(x<5){
+        pthread_join(thr[x],NULL);
+        x++;
+    }
+
+    return 0;
+}
+
+
