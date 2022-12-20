@@ -75,7 +75,7 @@ int main(){
 
     for(int i = 0 ; i<5 ; i++){
 
-        thread_no[i]=i;
+        threadnum[i]=i;
         pthread_create(&thr[i],NULL,let_go_fork,(void *)&threadnum[i]);
 
     }
