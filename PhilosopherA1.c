@@ -47,7 +47,7 @@ void * let_go_fork(void * b){
         }
 
         eating(PhilosopherNum);
-        sleep(2);
+        //sleep(2);
         printf("Philosopher number %d is done eating\n",PhilosopherNum);
         
         sem_post(&fork_[(PhilosopherNum+1)%5]);
