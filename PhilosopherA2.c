@@ -63,7 +63,7 @@ void* collect_cutlery(void* a){
 
     while (1)
     {
-        int P=(int)a;
+        int P=*(int*)a;
 
         if(P==4)
         {
