@@ -27,6 +27,8 @@ void attempt_left_fork(int num){
 
 void eating(int num){
     printf("Philosopher number %d is eating right now\n",num);
+    sleep(2);
+    printf("Philosopher number %d is done eating\n",num);
 }
 
 void * let_go_fork(void * b){
@@ -47,8 +49,7 @@ void * let_go_fork(void * b){
         }
 
         eating(PhilosopherNum);
-        sleep(2);
-        printf("Philosopher number %d is done eating\n",PhilosopherNum);
+
         
         sem_post(&fork_[(PhilosopherNum+1)%5]);
         printf("Philosopher number %d returns right fork to table\n",PhilosopherNum);
