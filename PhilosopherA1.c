@@ -67,14 +67,14 @@ int main(){
     
     int threadnum[5];
     pthread_t thr[5];
-    int j = 0;
+
+    
     int i = 0;
-    
-    while(i < 5){
+    int j = 0;
+    while(j<=4){
         sem_init(&fork_[i],0,1);
-        i++;
+        j++;
     }
-    
 
     for(int i = 0 ; i<5 ; i++){
 
@@ -82,10 +82,10 @@ int main(){
         pthread_create(&thr[i],NULL,let_go_fork,(void *)&threadnum[i]);
 
     }
-    
-    while(j < 5){
+
+    while(i<=4){
         pthread_join(thr[i],NULL);
-        j++;
+        i++;
     }
 
     return 0;
