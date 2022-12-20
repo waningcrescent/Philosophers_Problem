@@ -69,7 +69,7 @@ void * let_go_fork(void * b){
         eating(PhilosopherNum);
         
         sleep(2);
-        printf("Philosopher number %d is done eating",num);
+        printf("Philosopher number %d is done eating",PhilosopherNum);
         printf("\n");
 
         sem_post(&BOWL);
