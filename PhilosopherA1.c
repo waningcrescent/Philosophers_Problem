@@ -69,9 +69,9 @@ int main(){
     pthread_t thr[5];
 
     
-    int i = 0;
+    int x = 0;
     int j = 0;
-    while(j<=4){
+    while(j<5){
         sem_init(&fork_[i],0,1);
         j++;
     }
@@ -83,9 +83,9 @@ int main(){
 
     }
 
-    while(i<=4){
-        pthread_join(thr[i],NULL);
-        i++;
+    while(x<5){
+        pthread_join(thr[x],NULL);
+        x++;
     }
 
     return 0;
