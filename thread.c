@@ -3,6 +3,7 @@
 #include<semaphore.h>
 #include<pthread.h>
 #include<stdlib.h>
+#include<stdbool.h>
 
 
 sem_t fork[5];
@@ -49,9 +50,9 @@ void * let_go_fork(void * b){
         sleep(2);
         printf("Philosopher number %d is done eating\n",PhilosopherNum);
         
-        sem_post(&forks[(PhilosopherNum+1)%5]);
+        sem_post(&fork[(PhilosopherNum+1)%5]);
         printf("Philosopher number %d returns right fork to table\n",PhilosopherNum);
-        sem_post(&forks[(PhilosopherNum)]);
+        sem_post(&fork[(PhilosopherNum)]);
         printf("Philosopher number %d returns left fork to table\n",PhilosopherNum);
 
     }
