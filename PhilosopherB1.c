@@ -36,7 +36,7 @@ void eating(int num){
     printf("Philosopher number %d is eating right now",num);    
     printf("\n");
     sleep(2);
-    printf("Philosopher number %d is done eating",PhilosopherNum);
+    printf("Philosopher number %d is done eating",num);
     printf("\n");
 }
 
