@@ -75,8 +75,8 @@ void * let_go_fork(void * b){
 
     while (true)
     {
-        long m;
-        long PhilosopherNum=*(int *)b;
+        int m;
+        int PhilosopherNum=*(int *)b;
 
         if(PhilosopherNum==4){
 
