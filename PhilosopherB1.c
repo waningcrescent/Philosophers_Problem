@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<unistd.h>
 #include<semaphore.h>
+#include<stdbool.h>
 #include<pthread.h>
 
 sem_t fork_[5];
@@ -42,7 +43,7 @@ void * let_go_fork(void * b){
     while (true)
     {
         int PhilosopherNum=*(int *)b;
-        int v;
+        int m;
 
         if(PhilosopherNum==4){
 
@@ -55,9 +56,9 @@ void * let_go_fork(void * b){
             attempt_right_fork(PhilosopherNum);
         }
 
-        sem_getvalue(&bowl,&v);
+        sem_getvalue(&bowl,&m);
         printf("\n");
-        printf("Bowl Semaphore is : %d",v);
+        printf("Bowl Semaphore is : %d",m);
         printf("\n");
 
         sem_wait(&bowl);
@@ -75,9 +76,9 @@ void * let_go_fork(void * b){
         printf("Philosopher %d has returned the bowl to table",PhilosopherNum);
         printf("\n");
 
-        sem_getvalue(&bowl,&val);
+        sem_getvalue(&bowl,&m);
         printf("\n");
-        printf("Bowl Semaphore is : %d",val);
+        printf("Bowl Semaphore is : %d",m);
         printf("\n");
 
         sem_post(&fork_[(PhilosopherNum+1)%5]);
